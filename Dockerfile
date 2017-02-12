@@ -19,6 +19,9 @@ RUN apt-get update && \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/* 
 
+ADD 51-android.rules /etc/udev/rules.d
+RUN chmod a+r /etc/udev/rules.d/51-android.rules
+
 #ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
 
 #set Russian locale
