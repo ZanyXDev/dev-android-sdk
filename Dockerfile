@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM zanyxdev/dev-java-base:latest
 
 MAINTAINER ZanyXDev "zanyxdev@gmail.com"
 
@@ -19,8 +19,8 @@ RUN apt-get update && \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/* 
 
-ADD 51-android.rules /etc/udev/rules.d
-RUN chmod a+r /etc/udev/rules.d/51-android.rules
+RUN curl --create-dirs -L -o /etc/udev/rules.d/51-android.rules -O -L https://raw.githubusercontent.com/snowdream/51-android/master/51-android.rules && \
+    chmod a+r /etc/udev/rules.d/51-android.rules
 
 #ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
 
