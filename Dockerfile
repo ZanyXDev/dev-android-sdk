@@ -31,10 +31,10 @@ ENV GOOGLE_COMPONENTS extra-android-m2repository,extra-google-m2repository,extra
 	      extra-google-market_apk_expansion, extra-google-market_licensing, \
 	      extra-google-play_billing, extra-google-webdriver
 
-#ENV ANDROID_SOURCE source-25, source-21
+ENV ANDROID_SOURCE source-25, source-21
 
 #sys-img-x86_64-google_apis-25
-ENV GOOGLE_IMG sys-img-x86_64-google_apis-21
+ENV GOOGLE_IMG sys-img-x86_64-google_apis-21,sys-img-x86_64-google_apis-25
 ENV GOOGLE_APIS addon-google_apis-google-21
 
 RUN curl -L https://dl.google.com/android/repository/tools_r25.2.5-linux.zip -o /tmp/tools_r25.2.5-linux.zip && \
@@ -44,6 +44,7 @@ RUN curl -L https://dl.google.com/android/repository/tools_r25.2.5-linux.zip -o 
 RUN echo y | android update sdk --no-ui --all --filter "${ANDROID_COMPONENTS}" && \
     echo y | android update sdk --no-ui --all --filter "${GOOGLE_COMPONENTS}"  && \
     echo y | android update sdk --no-ui --all --filter "${GOOGLE_IMG}"  && \
+    echo y | android update sdk --no-ui --all --filter "${ANDROID_SOURCE}"  && \
     echo y | android update sdk --no-ui --all --filter "${GOOGLE_APIS}" 
 
 #ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
