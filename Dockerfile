@@ -13,11 +13,6 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.vcs-ref=$VCS_REF \
 org.label-schema.schema-version="1.0.0-rc1"
 
-# Dependencies
-RUN apt-get update && \
-    apt-get clean && \
-    apt-get autoremove && \
-    rm -rf /var/lib/apt/lists/* 
 
 RUN curl --create-dirs -L -o /etc/udev/rules.d/51-android.rules -O -L https://raw.githubusercontent.com/snowdream/51-android/master/51-android.rules && \
     chmod a+r /etc/udev/rules.d/51-android.rules
@@ -45,7 +40,8 @@ RUN echo y | android update sdk --no-ui --all --filter "${ANDROID_COMPONENTS}" &
     echo y | android update sdk --no-ui --all --filter "${GOOGLE_COMPONENTS}"  && \
     echo y | android update sdk --no-ui --all --filter "${GOOGLE_IMG}"  && \
     echo y | android update sdk --no-ui --all --filter "${ANDROID_SOURCE}"  && \
-    echo y | android update sdk --no-ui --all --filter "${GOOGLE_APIS}" 
+    echo y | android update sdk --no-ui --all --filter "${GOOGLE_APIS}" && \
+    chown -R developer:developer /opt/android-sdk-linux
 
 #ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
 
