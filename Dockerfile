@@ -33,8 +33,12 @@ ENV GOOGLE_IMG sys-img-x86_64-google_apis-21,sys-img-x86_64-google_apis-25
 ENV GOOGLE_APIS addon-google_apis-google-21
 
 RUN curl -L https://dl.google.com/android/repository/tools_r25.2.5-linux.zip -o /tmp/tools_r25.2.5-linux.zip && \
-    unzip /tmp/tools_r25.2.5-linux.zip -d /opt/android-sdk-linux && \
+    unzip /tmp/tools_r25.2.5-linux.zip -d $ANDROID_HOME && \
     rm -f /tmp/tools_r25.2.5-linux.zip
+
+RUN mkdir "$ANDROID_HOME/licenses" || true && \
+    echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license" && \
+    echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
 
 RUN echo y | android update sdk --no-ui --all --filter "${ANDROID_COMPONENTS}" && \
     echo y | android update sdk --no-ui --all --filter "${GOOGLE_COMPONENTS}"  && \
