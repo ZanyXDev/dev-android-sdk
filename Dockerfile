@@ -26,10 +26,10 @@ ENV GOOGLE_COMPONENTS extra-android-m2repository,extra-google-m2repository,extra
 	      extra-google-market_apk_expansion, extra-google-market_licensing, \
 	      extra-google-play_billing, extra-google-webdriver
 
-ENV ANDROID_SOURCE source-25, source-21
+ENV ANDROID_SOURCE source-21
 
-#sys-img-x86_64-google_apis-25
-ENV GOOGLE_IMG sys-img-x86_64-google_apis-21,sys-img-x86_64-google_apis-25
+#sys-img-x86_64-google_apis-25,sys-img-x86_64-google_apis-25
+ENV GOOGLE_IMG sys-img-x86_64-google_apis-21
 ENV GOOGLE_APIS addon-google_apis-google-21
 
 RUN curl -L https://dl.google.com/android/repository/tools_r25.2.5-linux.zip -o /tmp/tools_r25.2.5-linux.zip && \
@@ -47,11 +47,27 @@ RUN echo y | android update sdk --no-ui --all --filter "${ANDROID_COMPONENTS}" &
     echo y | android update sdk --no-ui --all --filter "${GOOGLE_APIS}" && \
     chown -R developer:developer /opt/android-sdk-linux
 
-#ENV JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
+# Create fake keymap file
+RUN mkdir $ANDROID_HOME/tools/keymaps && \
+touch $ANDROID_HOME/tools/keymaps/en-us
 
-#set Russian locale
-#ENV LC_ALL ru_RU.UTF-8 
-#ENV LANG ru_RU.UTF-8 
-#ENV LANGUAGE ru_RU.UTF-8 
 
-CMD /bin/bash
+#Install specifics for android support - glx drivers etc. \
+# Create fake keymap file
+
+#Install Deps
+RUN apt-get update && \
+    apt-get install -yq --no-install-recommends \
+    file \
+    apt-utils \
+    expect \
+    libc6-i386 \
+    lib32stdc++6 \
+    lib32gcc1 \
+    lib32ncurses5 \
+    lib32z1 \
+    libqt5widgets5 \
+    libgl1-mesa-dev && \
+    apt-get clean && \
+    rm -fr /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
