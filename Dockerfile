@@ -63,11 +63,13 @@ RUN apt-get update && \
     expect \
     libc6-i386 \
     lib32stdc++6 \
+    lib64stdc++6 \
+    mesa-utils \
     lib32gcc1 \
     lib32ncurses5 \
     lib32z1 \
     libqt5widgets5 \
-    libgl1-mesa-dev && \
+    libgl1-mesa-dev && \    
     apt-get clean && \
     rm -fr /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
