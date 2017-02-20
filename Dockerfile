@@ -60,6 +60,7 @@ RUN apt-get update && \
     apt-get install -yq --no-install-recommends \
     file \
     apt-utils \
+    pci-utils \
     expect \
     libc6-i386 \
     lib32stdc++6 \
