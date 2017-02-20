@@ -64,6 +64,7 @@ RUN apt-get update && \
     libc6-i386 \
     lib32stdc++6 \
     lib64stdc++6 \
+    libgl1-mesa-glx:i386 \
     mesa-utils \
     lib32gcc1 \
     lib32ncurses5 \
