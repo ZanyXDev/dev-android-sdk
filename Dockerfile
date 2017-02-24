@@ -71,6 +71,8 @@ RUN apt-get update && \
     lib32ncurses5 \
     lib32z1 \
     libqt5widgets5 \
+    pulseaudio \
+    alsa-utils \
     libgl1-mesa-dev && \    
     apt-get clean && \
     rm -fr /var/lib/apt/lists/* /tmp/* /var/tmp/*
