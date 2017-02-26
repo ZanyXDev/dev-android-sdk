@@ -29,7 +29,7 @@ ENV GOOGLE_COMPONENTS extra-android-m2repository,extra-google-m2repository,extra
 ENV ANDROID_SOURCE source-21,source-22,source-25
 
 #sys-img-x86_64-google_apis-25,sys-img-x86_64-google_apis-25
-ENV GOOGLE_IMG sys-img-x86_64-google_apis-21,sys-img-x86_64-google_apis-22
+#ENV GOOGLE_IMG sys-img-x86_64-google_apis-21,sys-img-x86_64-google_apis-22
 ENV GOOGLE_APIS addon-google_apis-google-21,addon-google_apis-google-22
 
 RUN curl -L https://dl.google.com/android/repository/tools_r25.2.5-linux.zip -o /tmp/tools_r25.2.5-linux.zip && \
@@ -42,10 +42,11 @@ RUN mkdir "$ANDROID_HOME/licenses" || true && \
 
 RUN echo y | android update sdk --no-ui --all --filter "${ANDROID_COMPONENTS}" && \
     echo y | android update sdk --no-ui --all --filter "${GOOGLE_COMPONENTS}"  && \
-    echo y | android update sdk --no-ui --all --filter "${GOOGLE_IMG}"  && \
     echo y | android update sdk --no-ui --all --filter "${ANDROID_SOURCE}"  && \
     echo y | android update sdk --no-ui --all --filter "${GOOGLE_APIS}" && \
     chown -R developer:developer /opt/android-sdk-linux
+
+#    echo y | android update sdk --no-ui --all --filter "${GOOGLE_IMG}"  && \
 
 # Create fake keymap file
 RUN mkdir $ANDROID_HOME/tools/keymaps && \
