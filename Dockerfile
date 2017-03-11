@@ -1,7 +1,6 @@
 FROM zanyxdev/dev-java-base:latest
 
-MAINTAINER ZanyXDev "zanyxdev@gmail.com"
-
+LABEL maintainer "ZanyXDev <zanyxdev@gmail.com>"
 ENV DEBIAN_FRONTEND noninteractive
 ENV DEBCONF_NONINTERACTIVE_SEEN true
 
@@ -20,17 +19,17 @@ RUN curl --create-dirs -L -o /etc/udev/rules.d/51-android.rules -O -L https://ra
 #Installs configure and update Android SDK with components
 ENV ANDROID_HOME /opt/android-sdk-linux 
 ENV PATH ${PATH}:/opt/android-sdk-linux/tools:/opt/android-sdk-linux/platform-tools
-ENV ANDROID_COMPONENTS  platform-tools,android-25, android-21, android-22,build-tools-25.0.2, build-tools-21.1.2,build-tools-22.0.1
+ENV ANDROID_COMPONENTS  platform-tools,android-25, android-22,build-tools-25.0.2, build-tools-22.0.1
 ENV GOOGLE_COMPONENTS extra-android-m2repository,extra-google-m2repository,extra-google-google_play_services \
 	      extra-google-admob_ads_sdk, extra-google-analytics_sdk_v2, extra-google-google_play_services, \
 	      extra-google-market_apk_expansion, extra-google-market_licensing, \
 	      extra-google-play_billing, extra-google-webdriver
 
-ENV ANDROID_SOURCE source-21,source-22,source-25
+ENV ANDROID_SOURCE source-22,source-25
 
 #sys-img-x86_64-google_apis-25,sys-img-x86_64-google_apis-25
-ENV GOOGLE_IMG sys-img-x86_64-google_apis-21,sys-img-x86_64-google_apis-22
-ENV GOOGLE_APIS addon-google_apis-google-21,addon-google_apis-google-22
+#ENV GOOGLE_IMG sys-img-x86_64-google_apis-21,sys-img-x86_64-google_apis-22
+ENV GOOGLE_APIS addon-google_apis-google-22
 
 RUN curl -L https://dl.google.com/android/repository/tools_r25.2.5-linux.zip -o /tmp/tools_r25.2.5-linux.zip && \
     unzip /tmp/tools_r25.2.5-linux.zip -d $ANDROID_HOME && \
@@ -42,7 +41,6 @@ RUN mkdir "$ANDROID_HOME/licenses" || true && \
 
 RUN echo y | android update sdk --no-ui --all --filter "${ANDROID_COMPONENTS}" && \
     echo y | android update sdk --no-ui --all --filter "${GOOGLE_COMPONENTS}"  && \
-    echo y | android update sdk --no-ui --all --filter "${GOOGLE_IMG}"  && \
     echo y | android update sdk --no-ui --all --filter "${ANDROID_SOURCE}"  && \
     echo y | android update sdk --no-ui --all --filter "${GOOGLE_APIS}" && \
     chown -R developer:developer /opt/android-sdk-linux
